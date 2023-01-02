@@ -14,8 +14,9 @@ This means, out of the box, it isn't globally unique like a UUID, so you are req
 * Init with an incrementing server or deployment ID, *OR*
 * Use the global string prepend to uniquely identify the running code (eg. IP address or MAC address or long random number).
 
-With a bit of up-front work to get an incrementing machine or deploy ID, your application can enjoy very short IDs, as
-compared with other UID generators that end up absorbing a full timestamp, MAC address, IP address/ports, etc.
+With a bit of up-front work to get an incrementing machine or deploy ID, your application can enjoy very short IDs,
+that generate fast across a distributed cluster, as compared with other UID generators that end up absorbing a full
+timestamp, MAC address, IP address/ports, etc.
 
 
 ```go

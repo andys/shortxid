@@ -26,10 +26,11 @@ func TestShortxid_NewID_Prepend(t *testing.T) {
 
 func TestShortxid_NewID_Expected(t *testing.T) {
 	gen := NewGenerator(12345, "")
-	gen.TimeFunc = func() uint64 { return 1234567890 }
+	gen.TimeFunc = func() uint64 { return 1672650000000 - epochMillis }
 
 	result := gen.NewID("")
-	if result != "1WrZ9RdWC1" {
+	if result != "AzXJPynWMUL" {
 		t.Fatal("new ID did not match expected: " + result)
 	}
+
 }

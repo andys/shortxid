@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	epochMillis = uint64(1672491600) * 1000 // starts 2023 and ends 2057 (40 bits)
+	epochMillis = uint64(1672491600000) // starts 2023 and ends 2040 (39 bits)
 	encoding    = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 )
 
@@ -34,9 +34,9 @@ func NewGenerator[I constraints.Integer](id I, globalPrepend string) *Generator 
 }
 
 func (g *Generator) NewID(prepend string) string {
-	now := g.TimeFunc()
-	ctr := atomic.AddUint64(&g.counter, 1)
+	now := g.TimeFunc() & 0xffffffffff
+	ctr := atomic.AddUint64(&g.counter, 1) & 0xffff
 
-	newIDint := ((now & 0xffffffffff) << (8 * 3)) | (ctr & 0xffff) | (g.id)
+	newIDint := (now << (8 * 3)) | ctr | g.id | uint64(0x8000000000000000)
 	return g.globalPrepend + prepend + string(g.encoder.FormatUint(newIDint))
 }
